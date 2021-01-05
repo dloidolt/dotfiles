@@ -27,6 +27,23 @@ set nowrap
 " Show trailing spaces and highlight hard tabs
 set list listchars=tab:»·,trail:·
 
+" Strip trailing whitespaces on each save
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
+" Search related settings
+" While typing a search command, show where the pattern, as it was typed so far, matches.
+set incsearch
+" highlighting of search matches
+set hlsearch
+
+" Map Ctrl+l to clear highlighted searches
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 """""""""""""""""""""""""""
 " Dash Doku Configuration "
 """""""""""""""""""""""""""
@@ -123,6 +140,12 @@ let g:lightline.active = {
 
 " Gitgutter
 set updatetime=250
+
+"""""""
+" fzf "
+"""""""
+" Set fzf runtime "
+set rtp+=/usr/local/opt/fzf
 
 " Load all plugins now.
 " Plugins need to be added to runtimepath before helptags can be generated.
