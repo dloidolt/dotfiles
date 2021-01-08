@@ -10,6 +10,7 @@
     ~/.gvimrc:
     ~/.vim:
     ~/.vimrc:
+    ~/.zshenv:
     ~/.zlogin:
     ~/.zshrc:
 
