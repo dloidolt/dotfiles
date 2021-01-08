@@ -47,7 +47,7 @@ nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 """""""""""""""""""""""""""
 " Dash Doku Configuration "
 """""""""""""""""""""""""""
-:nmap <silent> <leader>d <Plug>DashSearch 
+:nmap <silent> <leader>d <Plug>DashSearch
 
 """"""""""""
 " Nerdtree "
@@ -132,10 +132,11 @@ let g:lightline.component_type = {
       \     'linter_ok': 'left',
       \ }
 let g:lightline.active = {
-    \ 'left': [ [ 'mode', 'paste' ],
-    \           [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
-    \ 'right': [['filetype'],
-    \           [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ] ] }
+      \ 'left': [ [ 'mode', 'paste' ],
+      \           [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+      \ 'right': [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
+      \           ['filetype'] ]
+      \ }
 
 
 " Gitgutter
