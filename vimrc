@@ -7,8 +7,15 @@ color smyck
 " Set encoding
 set encoding=utf-8
 
+" I always hit ":W" instead of ":w" because I linger on the shift key...
+command! Q q
+command! W w:
+
 " turn spell checker on
 set spell spelllang=en_gb
+" Quickly fix spelling errors choosing the first result
+nmap <Leader>z z=1<CR><CR>
+
 
 " turn hybrid line numbers on
 " see: https://jeffkreeftmeijer.com/vim-number/
@@ -44,6 +51,16 @@ set hlsearch
 
 " Map Ctrl+l to clear highlighted searches
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+
+" Highlight characters behind the 80 chars margin
+au FileType c au BufWinEnter * let w:m2=matchadd('ColumnMargin', '\%>80v.\+', -1)
+
+" Disable code folding
+set nofoldenable
+
+" VHDL uses 3 spaces
+au FileType vhdl set softtabstop=3 tabstop=3 shiftwidth=3
+
 """""""""""""""""""""""""""
 " Dash Doku Configuration "
 """""""""""""""""""""""""""
@@ -86,14 +103,8 @@ let g:ale_hover_cursor = 1
 """"""""""""
 let g:deoplete#enable_at_startup = 1
 
-function! s:check_back_space() abort "{{{
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction"}}}
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ deoplete#manual_complete()
+" close the preview window after completion is done.
+autocmd CompleteDone * silent! pclose!
 
 """""""""""""""""""""""""""""
 " lightline / lightline-ale "
@@ -147,6 +158,10 @@ set updatetime=250
 """""""
 " Set fzf runtime "
 set rtp+=/usr/local/opt/fzf
+
+" Key Bindings
+nmap ; :Buffers<CR>
+nmap <Leader>f :Files<CR>
 
 " Load all plugins now.
 " Plugins need to be added to runtimepath before helptags can be generated.
