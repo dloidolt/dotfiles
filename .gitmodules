@@ -53,3 +53,15 @@
 [submodule "vim/pack/plugins/start/vim-commentary"]
 	path = vim/pack/plugins/start/vim-commentary
 	url = https://github.com/tpope/vim-commentary.git
+[submodule "vim/pack/plugins/start/ultisnips"]
+	path = vim/pack/plugins/start/ultisnips
+	url = https://github.com/SirVer/ultisnips
+[submodule "vim/pack/plugins/start/vim-snippets"]
+	path = vim/pack/plugins/start/vim-snippets
+	url = https://github.com/honza/vim-snippets
+[submodule "vim/pack/plugins/start/vim-gutentags"]
+	path = vim/pack/plugins/start/vim-gutentags
+	url = https://github.com/ludovicchabant/vim-gutentags
+[submodule "vim/pack/plugins/start/deoplete-clangx"]
+	path = vim/pack/plugins/start/deoplete-clangx
+	url = https://github.com/Shougo/deoplete-clangx
