@@ -59,3 +59,6 @@ alias gdct='git describe --tags $(git rev-list --tags --max-count=1)'
 alias gds='git diff --staged'
 alias gdt='git diff-tree --no-commit-id --name-only -r'
 alias gdw='git diff --word-diff'
+
+# use Smyck color theme for bat
+export BAT_THEME="Smyck"
