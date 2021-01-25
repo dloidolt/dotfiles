@@ -65,3 +65,9 @@
 [submodule "vim/pack/plugins/start/deoplete-clangx"]
 	path = vim/pack/plugins/start/deoplete-clangx
 	url = https://github.com/Shougo/deoplete-clangx
+[submodule "oh-my-zsh"]
+	path = oh-my-zsh
+	url = https://github.com/ohmyzsh/ohmyzsh.git
+[submodule "powerlevel10k"]
+	path = powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git
