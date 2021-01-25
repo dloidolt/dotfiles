@@ -14,6 +14,9 @@
     ~/.zshenv:
     ~/.zlogin:
     ~/.zshrc:
+    ~/.vim/pack/plugins/start/lightline-ale/autoload/lightline/colorscheme/smyck.vim:
+      create: true
+      path: vim/colors/smyck_lightline.vim
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
