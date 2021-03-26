@@ -163,6 +163,14 @@ set rtp+=/usr/local/opt/fzf
 nmap ; :Buffers<CR>
 nmap <Leader>f :Files<CR>
 
+
+"""""""""
+" latex "
+"""""""""
+" tex-conceal
+set conceallevel=2
+let g:tex_conceal="abdgms"
+
 " Load all plugins now.
 " Plugins need to be added to runtimepath before helptags can be generated.
 packloadall
