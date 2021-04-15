@@ -5,6 +5,7 @@
 - clean: ['~']
 
 - link:
+    ~/.config/bat:
     ~/.gitconfig:
     ~/.gitignore:
     ~/.gvimrc:
