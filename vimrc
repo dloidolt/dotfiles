@@ -1,5 +1,8 @@
 set nocompatible
 
+" use the zsh shell
+set shell=/bin/zsh
+
 " turn syntax highlighting on
 syntax on
 color smyck
@@ -7,9 +10,15 @@ color smyck
 " Set encoding
 set encoding=utf-8
 
+" enable undo changes after file write
+if has('persistent_undo')      "check if your vim version supports it
+  set undofile                 "turn on the feature
+  set undodir=$HOME/.vim/undo  "directory where the undo files will be stored
+  endif
+
 " I always hit ":W" instead of ":w" because I linger on the shift key...
 command! Q q
-command! W w:
+command! W w
 
 " turn spell checker on
 set spell spelllang=en_gb
@@ -98,6 +107,20 @@ highlight clear SignColumn
 " Truncated information will be displayed when the cursor rests on a symbol
 let g:ale_hover_cursor = 1
 
+" use the brew python version
+ let b:ale_python_pyright_config = {
+ \ 'python': {
+ \   'pythonPath': '/usr/local/bin/python3',
+ \ },
+ \}
+
+" ale c configuration
+
+" get flags from makefile
+let g:ale_c_parse_makefile = 1
+
+"use the Wevertyhing to enable all clang errors
+let g:ale_c_cc_options = '-Wevertyhing'
 """"""""""""
 " deoplete "
 """"""""""""
@@ -105,6 +128,22 @@ let g:deoplete#enable_at_startup = 1
 
 " close the preview window after completion is done.
 autocmd CompleteDone * silent! pclose!
+
+"""""""""""""
+" UltiSnips "
+"""""""""""""
+" Trigger configuration. Do not use <tab> if you use
+" https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+
+" shortcut to go to next position
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+
+" shortcut to go to previous position
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
 """""""""""""""""""""""""""""
 " lightline / lightline-ale "
@@ -117,37 +156,38 @@ set laststatus=2
 set noshowmode
 
 let g:lightline = {
-      \ 'colorscheme': 'smyck',
-  \ 'active': {
+      \ 'colorscheme':        'smyck',
+      \ 'separator':          { 'left': "", 'right': "" },
+      \ 'subseparator':       { 'left': "", 'right': "" },
+      \ 'component_function': { 'gitbranch': 'LightlineGitbranch' },
+      \ 'component_expand':   { 'linter_checking':  'lightline#ale#checking',
+      \                         'linter_infos':     'lightline#ale#infos',
+      \                         'linter_warnings':  'lightline#ale#warnings',
+      \                         'linter_errors':    'lightline#ale#errors',
+      \                         'linter_ok': 'lightline#ale#ok'
+      \ },
+      \ 'component_type' :    { 'linter_checking': 'left',
+      \                         'linter_warnings': 'warning',
+      \                         'linter_errors': 'error',
+      \                         'linter_ok': 'left'
+      \ },
+      \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'gitbranch#name'
-      \ },
-      \ }
+      \             [ 'gitbranch'],
+      \             [ 'filename', 'readonly', 'modified' ] ],
+      \  'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
+      \             [ 'filetype'] ]
+      \  }
+    \ }
 
-" configuration form lightline-ale README.md
-let g:lightline.component_expand = {
-      \  'linter_checking': 'lightline#ale#checking',
-      \  'linter_infos': 'lightline#ale#infos',
-      \  'linter_warnings': 'lightline#ale#warnings',
-      \  'linter_errors': 'lightline#ale#errors',
-      \  'linter_ok': 'lightline#ale#ok',
-      \ }
-
-let g:lightline.component_type = {
-      \     'linter_checking': 'left',
-      \     'linter_warnings': 'warning',
-      \     'linter_errors': 'error',
-      \     'linter_ok': 'left',
-      \ }
-let g:lightline.active = {
-      \ 'left': [ [ 'mode', 'paste' ],
-      \           [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
-      \ 'right': [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
-      \           ['filetype'] ]
-      \ }
+function! LightlineGitbranch()
+  if exists('*gitbranch#name')
+    let mark = "@"  " edit here for cool mark
+    let branch = gitbranch#name()
+    return branch !=# '' ? mark.branch : ''
+  endif
+  return ''
+endfunction
 
 
 " Gitgutter
@@ -167,9 +207,15 @@ nmap <Leader>f :Files<CR>
 """""""""
 " latex "
 """""""""
+" enable soft wrapping at the edge of the screen
+au FileType tex set wrap linebreak
+
+let g:vimtex_view_method = 'skim'
+nmap <silent> <leader>v :VimtexView
+
 " tex-conceal
-set conceallevel=2
-let g:tex_conceal="abdgms"
+"set conceallevel=2
+"let g:tex_conceal="abdgms"
 
 " Load all plugins now.
 " Plugins need to be added to runtimepath before helptags can be generated.

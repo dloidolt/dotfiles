@@ -1,5 +1,6 @@
 [core]
 	excludesFile = ~/.gitignore
+	editor = mvim -f
 #add diff-highlight to $PATH
 [pager]
 	log =  /usr/local/opt/git/share/git-core/contrib/diff-highlight/diff-highlight | less
