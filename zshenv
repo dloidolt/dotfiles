@@ -1,3 +1,10 @@
+# leon tool chain
+alias leon='grmon -freq 80 -ftdi -u -jtagcable 1'
+alias rigol='/home/space/CHEOPS/rigol.sh'
+path+=('/home/space/sparc-compiler/bin')
+path+=('/opt/grmon-pro-2/linux64/bin')
+export PATH
+
 alias m='make'
 alias fork='open -a Fork .'
 

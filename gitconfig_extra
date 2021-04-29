@@ -1,22 +1,6 @@
 [core]
 	excludesFile = ~/.gitignore
-	editor = mvim -f
-#add diff-highlight to $PATH
-[pager]
-	log =  /usr/local/opt/git/share/git-core/contrib/diff-highlight/diff-highlight | less
-	show = /usr/local/opt/git/share/git-core/contrib/diff-highlight/diff-highlight | less
-	diff = /usr/local/opt/git/share/git-core/contrib/diff-highlight/diff-highlight | less
-[diff]
-	tool = meld
-[difftool]
-	prompt = false
-[difftool "meld"]
-	cmd = meld "$LOCAL" "$REMOTE"
-[merge]
-	tool = meld
-[mergetool "meld"]
-	;cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
-	cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+	editor = vim
 [alias]
 	tree = log --oneline --decorate --all --graph
 [user]
