@@ -5,9 +5,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -16,6 +13,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
+# powerlevel10k theme configuration
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Set list of themes to pick from when loading at random
@@ -76,17 +74,17 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vi-mode)
+plugins=(git vi-mode zsh-z alias-finder pip)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
 # add /diff-highlight to PATH
+export PATH="$PATH:/usr/local/opt/git/share/git-core/contrib/diff-highlight"
 
-# export PATH="$PATH:/usr/local/opt/git/share/git-core/contrib/diff-highlight"
-
-# export MANPATH="/usr/local/man:$MANPATH"
+# bat can be used as a colorizing pager for man, by setting the MANPAGER environment variable
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
@@ -104,14 +102,16 @@ LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;4
 # removes extra space at the end of line #see https://github.com/romkatv/powerlevel10k/issues/132#issuecomment-514592283
 ZLE_RPROMPT_INDENT=0
 
-
+source ${HOME}/.iterm2_shell_integration.zsh
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='mvim'
+fi
+
+alias v=$EDITOR
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -124,3 +124,10 @@ ZLE_RPROMPT_INDENT=0
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# This plugin searches the defined aliases and outputs any that match the command inputted. This makes learning new aliases easier.
+ZSH_ALIAS_FINDER_AUTOMATIC=true
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+eval $(thefuck --alias)
