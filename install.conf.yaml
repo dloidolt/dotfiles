@@ -10,6 +10,7 @@
     ~/.gitignore:
     ~/.gvimrc:
     ~/.oh-my-zsh:
+    ~/.oh-my-zsh-custom:
     ~/.p10k.zsh:
     ~/.vim:
     ~/.vimrc:
@@ -19,8 +20,6 @@
     ~/.vim/pack/plugins/start/lightline-ale/autoload/lightline/colorscheme/smyck.vim:
       create: true
       path: vim/colors/smyck_lightline.vim
-    ~/.oh-my-zsh/custom/themes/powerlevel10k:
-      path: powerlevel10k
 
 - shell:
   - [git submodule update --init --recursive --remote, Installing submodules]

@@ -19,3 +19,6 @@
 	cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
 [alias]
 	tree = log --oneline --decorate --all --graph
+[user]
+	name = Dominik Loidolt
+	email = dominik.loidolt@univie.ac.at

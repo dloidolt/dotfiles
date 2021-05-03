@@ -67,12 +67,12 @@ ENABLE_CORRECTION="true"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
+
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git vi-mode zsh-z alias-finder pip)
 
@@ -90,9 +90,6 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-# use Smyck color theme for bat
-export BAT_THEME="Smyck"
-
 alias weather='curl https://v2.wttr.in'
 alias weather_wien='curl https://v2.wttr.in/Wien'
 
@@ -102,7 +99,7 @@ LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;4
 # removes extra space at the end of line #see https://github.com/romkatv/powerlevel10k/issues/132#issuecomment-514592283
 ZLE_RPROMPT_INDENT=0
 
-source ${HOME}/.iterm2_shell_integration.zsh
+[ -f ${HOME}/.iterm2_shell_integration.zsh ] && source ${HOME}/.iterm2_shell_integration.zsh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -113,21 +110,18 @@ fi
 
 alias v=$EDITOR
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# This plugin searches the defined aliases and outputs any that match the command inputted. This makes learning new aliases easier.
+# This plugin searches the defined aliases and outputs any that match the
+# command inputted. This makes learning new aliases easier.
 ZSH_ALIAS_FINDER_AUTOMATIC=true
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ${HOME}/.fzf.zsh ] && source ${HOME}/.fzf.zsh
 
-eval $(thefuck --alias)
+[ -f "$(command -v thefuck)" ] && eval $(thefuck --alias)
+
