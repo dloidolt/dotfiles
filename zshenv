@@ -1,5 +1,4 @@
 alias m='make'
-
 alias fork='open -a Fork .'
 
 # use Smyck color theme for bat
@@ -9,19 +8,11 @@ export BAT_THEME="Smyck"
 # see https://embeddedartistry.com/blog/2017/02/24/installing-llvm-clang-on-osx/
 export PATH=/usr/local/opt/llvm/bin:$PATH
 
-# leon tool chain
-alias leon='grmon -freq 80 -ftdi -u -jtagcable 1'
-alias rigol='/home/space/CHEOPS/rigol.sh'
-path+=('/home/space/sparc-compiler/bin')
-path+=('/opt/grmon-pro-2/linux64/bin')
-export PATH
-
 
 # add this to use git alias in vim like !gd
 # see: https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git/git.plugin.zsh
 # Aliases
 # (sorted alphabetically)
-#
 
 alias g='git'
 
