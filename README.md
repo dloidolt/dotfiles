@@ -8,3 +8,7 @@ times has no effect.
 
 To upgrade your submodules to their latest versions, you could periodically run
 `git submodule update --init --remote`.
+
+# Dependencies
+Meslo Nerd Font patched for Powerlevel10k
+https://github.com/romkatv/powerlevel10k/blob/master/font.md
