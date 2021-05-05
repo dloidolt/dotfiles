@@ -6,7 +6,7 @@
 
 - link:
     ~/.config/bat:
-    ~/.gitconfig:
+    ~/.gitconfig_extra:
     ~/.gitignore:
     ~/.gvimrc:
     ~/.oh-my-zsh:
@@ -22,4 +22,5 @@
       path: vim/colors/smyck_lightline.vim
 
 - shell:
-  - [git submodule update --init --recursive --remote, Installing submodules]
+    - [git config --global include.path ~/.gitconfig_extra]
+    - [git submodule update --init --recursive --remote, Installing submodules]
