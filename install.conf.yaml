@@ -15,7 +15,6 @@
     ~/.vim:
     ~/.vimrc:
     ~/.zshenv:
-    ~/.zlogin:
     ~/.zshrc:
     ~/.vim/pack/plugins/start/lightline-ale/autoload/lightline/colorscheme/smyck.vim:
       create: true
