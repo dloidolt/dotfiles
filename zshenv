@@ -1,5 +1,6 @@
 alias m='make'
 alias fork='open -a Fork .'
+alias sup='open -a Sublime\ Text'
 
 # use Smyck color theme for bat
 export BAT_THEME="Smyck"
@@ -171,3 +172,4 @@ alias gts='git tag -s'
 alias gup='git pull --rebase'
 
 alias glum='git pull upstream $(git_main_branch)'
+. "$HOME/.cargo/env"
