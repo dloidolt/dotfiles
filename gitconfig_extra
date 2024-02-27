@@ -1,6 +1,5 @@
 [core]
 	excludesFile = ~/.gitignore
-	editor = mvim -f
 
 [push]
 	; push the current branch and set the remote as upstream

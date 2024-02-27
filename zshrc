@@ -104,8 +104,10 @@ ZLE_RPROMPT_INDENT=0
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
+  export GIT_EDITOR=$EDITOR
 else
   export EDITOR='mvim'
+  export GIT_EDITOR='mvim -f'
 fi
 
 alias v=$EDITOR
