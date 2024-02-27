@@ -1,24 +1,53 @@
 [core]
 	excludesFile = ~/.gitignore
 	editor = mvim -f
-#add diff-highlight to $PATH
-[pager]
-	log =  /usr/local/opt/git/share/git-core/contrib/diff-highlight/diff-highlight | less
-	show = /usr/local/opt/git/share/git-core/contrib/diff-highlight/diff-highlight | less
-	diff = /usr/local/opt/git/share/git-core/contrib/diff-highlight/diff-highlight | less
-[diff]
-	tool = meld
-[difftool]
-	prompt = false
-[difftool "meld"]
-	cmd = meld "$LOCAL" "$REMOTE"
+
+[push]
+	; push the current branch and set the remote as upstream
+	autoSetupRemote = true
+
+[commit]
+	; show unified diff of all file changes at the bottom of the commit message template
+	verbose = true
+
 [merge]
-	tool = meld
-[mergetool "meld"]
-	;cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
-	cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+	; adds a ||||||| marker and the original text before the ======= marker
+	conflictstyle = zdiff3
+
+[diff]
+	; generate a diff using the "histogram diff" algorithm
+	algorithm = histogram
+
 [alias]
 	tree = log --oneline --decorate --all --graph
-[user]
-	name = Dominik Loidolt
-	email = dominik.loidolt@univie.ac.at
+	; git dlog to show git log -p with difftastic
+	dlog = "!f() { GIT_EXTERNAL_DIFF=difft git log -p --ext-diff $@; }; f"
+
+
+[pager]
+	log =  diff-highlight | less --tabs=8 -RFX
+	show = diff-highlight | less --tabs=8 -RFX
+	diff = diff-highlight | less --tabs=1,9 -RFX
+
+[interactive]
+	diffFilter = diff-highlight
+
+[diff]
+	tool = difft
+	guitool = meld
+
+[difftool]
+	prompt = false
+
+[difftool "difft"]
+	cmd = difft  --color=always --tab-width=8 "$LOCAL" "$REMOTE" | less --tabs=8 -RFX
+
+[difftool "meld"]
+	cmd = meld "$LOCAL" "$REMOTE"
+
+[merge]
+	tool = meld
+
+[mergetool "meld"]
+	cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+	;cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
