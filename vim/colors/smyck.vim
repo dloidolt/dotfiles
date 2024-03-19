@@ -40,10 +40,11 @@ hi SpellLocal      cterm=underline ctermbg=none     ctermfg=none    gui=underlin
 hi Visual               cterm=none ctermbg=15       ctermfg=8       gui=none        guibg=#F7F7F7   guifg=#8F8F8F
 hi Directory            cterm=none ctermbg=none     ctermfg=4       gui=none        guibg=#242424   guifg=#88CCE7
 hi SpecialKey           cterm=none ctermbg=none     ctermfg=8       gui=none                        guifg=#8F8F8F
-hi DiffAdd              cterm=bold ctermbg=2        ctermfg=15
-hi DiffChange           cterm=bold ctermbg=4        ctermfg=15
-hi DiffDelete           cterm=bold ctermbg=1        ctermfg=15
-hi DiffText             cterm=bold ctermbg=3        ctermfg=8
+hi DiffAdd              cterm=bold ctermbg=2        ctermfg=15      gui=none        guibg=#282828   guifg=#8EB33B
+hi DiffChange           cterm=bold ctermbg=4        ctermfg=15      gui=none        guibg=#282828   guifg=#C75646
+hi DiffDelete           cterm=bold ctermbg=1        ctermfg=15      gui=none        guibg=#282828   guifg=#C75646
+" hi DiffText             cterm=none ctermbg=none     ctermfg=15      gui=none        guibg=#282828   guifg=#F7F7F7
+hi DiffText             cterm=none ctermbg=none     ctermfg=15      gui=none        guibg=#282828   guifg=#F7F7F7
 hi MatchParen           cterm=none ctermbg=6        ctermfg=15      gui=none        guibg=#2EB5C1   guifg=#F7F7F7
 hi CursorLine           cterm=none ctermbg=238      ctermfg=none    gui=none        guibg=#242424
 hi CursorLineNr         cterm=none ctermbg=238      ctermfg=none    gui=none                        guifg=#FFE377
@@ -52,6 +53,8 @@ hi Title                cterm=none ctermbg=none     ctermfg=4       gui=none    
 "add for vspilt
 hi VertSplit            cterm=bold ctermbg=none     ctermfg=8       gui=bold        guibg=#282828   guifg=#8F8F8F
 hi SignColumn           cterm=bold ctermbg=none     ctermfg=8       gui=bold        guibg=#282828   guifg=#8F8F8F
+"add for mvim terminal
+hi Terminal             cterm=none ctermbg=none     ctermfg=15      gui=none        guibg=#282828   guifg=#F7F7F7
 
 " ----------------------------------------------------------------------------
 " Syntax Highlighting
@@ -69,7 +72,7 @@ hi Statement            cterm=none ctermbg=none ctermfg=10          gui=none    
 hi Special              cterm=none ctermbg=none ctermfg=6           gui=none        guifg=#d7d7d7
 hi String               cterm=none ctermbg=none ctermfg=3           gui=none        guifg=#F6DC69
 hi Number               cterm=none ctermbg=none ctermfg=3           gui=none        guifg=#F6DC69
-hi Underlined           cterm=none ctermbg=none ctermfg=magenta     gui=underline   guibg=#272727
+hi Underlined           cterm=none ctermbg=none ctermfg=1           gui=underline   guibg=#272727
 hi Symbol               cterm=none ctermbg=none ctermfg=9           gui=none        guifg=#FAB1AB
 hi Method               cterm=none ctermbg=none ctermfg=15          gui=none        guifg=#F7F7F7
 hi Interpolation        cterm=none ctermbg=none ctermfg=6           gui=none        guifg=#2EB5C1
@@ -102,3 +105,11 @@ hi link GitGutterAdd          Keyword
 hi link GitGutterChange       String
 hi link GitGutterDelete       Symbol
 hi link GitGutterChangeDelete Identifier
+
+" gitcommit
+hi diffAdded            cterm=none ctermbg=none ctermfg=2           gui=none        guifg=#8EB33B
+hi diffRemoved          cterm=none ctermbg=none ctermfg=1           gui=none        guifg=#C75646
+hi gitcommitBranch      cterm=bold ctermbg=none ctermfg=6           gui=bold        guifg=#d7d7d7
+hi link diffFile             Normal
+hi link diffIndexLine        Normal
+hi link diffLine             Identifier
