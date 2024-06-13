@@ -10,11 +10,14 @@ color smyck
 " Set encoding
 set encoding=utf-8
 
+" remap <leader> key to ,
+:let mapleader = ","
+
 " enable undo changes after file write
 if has('persistent_undo')      "check if your vim version supports it
   set undofile                 "turn on the feature
   set undodir=$HOME/.vim/undo  "directory where the undo files will be stored
-  endif
+endif
 
 " I always hit ":W" instead of ":w" because I linger on the shift key...
 command! Q q
@@ -57,6 +60,10 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 set incsearch
 " highlighting of search matches
 set hlsearch
+" Ignoring case in a pattern
+set ignorecase
+" Overrides ignorecase if your pattern contains mixed case
+set smartcase
 
 " Map Ctrl+l to clear highlighted searches
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
@@ -66,6 +73,13 @@ au FileType c au BufWinEnter * let w:m2=matchadd('ColumnMargin', '\%>80v.\+', -1
 
 " Disable code folding
 set nofoldenable
+
+" change the direction of new splits
+set splitbelow
+set splitright
+
+" By default, Vim assumes all .h files to be C++ files.  Since project also comes with doxygen documentation, I want to set subtype to doxygen to enable very nice doxygen highlighting.
+let g:c_syntax_for_h = 1
 
 " VHDL uses 3 spaces
 au FileType vhdl set softtabstop=3 tabstop=3 shiftwidth=3
@@ -87,44 +101,46 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " ALE Configuration "
 """""""""""""""""""""
 nmap <silent> <leader>g :ALEGoToDefinition<CR>
-nmap <silent> <leader>r :ALEFindReferences<CR>
-nmap <silent> <leader>h :ALEHover<CR>
-nmap <silent> <leader>s :ALESymbolSearch<CR>
+nmap <silent> <leader>s :ALEGoToDefinition -vsplit<CR>
+nmap <silent> <leader>t :ALEGoToDefinition -tab<CR>
+" nmap <silent> <leader>ss :ALEGoToDefinition -split<CR>
 nmap <silent> <leader>r :ALERename<CR>
-" navigate between errors quickly
+nmap <silent> <leader>h :ALEHover<CR>
+"" navigate between errors quickly
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+" disable virtualtext
+let g:ale_virtualtext_cursor = 0
 
 " change the format for echo messages
 let g:ale_echo_msg_format = '%s [%linter%]'
 
-" Always show ALE Gutter
-let g:ale_sign_column_always = 1
+"" Always show ALE Gutter
+"let g:ale_sign_column_always = 1
 
-" No bgcolor for ALE SignColumn
-highlight clear SignColumn
+"" No bgcolor for ALE SignColumn
+"highlight clear SignColumn
+"
+"
+"" use the brew python version
+" let b:ale_python_pyright_config = {
+" \ 'python': {
+" \   'pythonPath': '/usr/local/bin/python3',
+" \ },
+" \}
+"
+"" ale c configuration
+"" use the Weverything to enable all clang errors
+"let g:ale_c_cc_options = '-Weverything'
+"
+"" use rust analyser
+"let g:ale_linters = {'rust': ['cargo', 'rls', 'analyzer']} ", 'rustc']}
 
-" Truncated information will be displayed when the cursor rests on a symbol
-let g:ale_hover_cursor = 1
-
-" use the brew python version
- let b:ale_python_pyright_config = {
- \ 'python': {
- \   'pythonPath': '/usr/local/bin/python3',
- \ },
- \}
-
-" ale c configuration
-
-" get flags from makefile
-let g:ale_c_parse_makefile = 1
-
-"use the Wevertyhing to enable all clang errors
-let g:ale_c_cc_options = '-Wevertyhing'
 """"""""""""
 " deoplete "
 """"""""""""
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 
 " close the preview window after completion is done.
 autocmd CompleteDone * silent! pclose!
@@ -145,16 +161,19 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
+" use numpy  docstring format for python
+let g:ultisnips_python_style="numpy"
+
 """""""""""""""""""""""""""""
 " lightline / lightline-ale "
 """""""""""""""""""""""""""""
+source ~/.vim/colors/smyck_lightline.vim
 
 " Always show status bar
 set laststatus=2
 
 " Disable Mode Display because Status line is on
 set noshowmode
-
 let g:lightline = {
       \ 'colorscheme':        'smyck',
       \ 'separator':          { 'left': "", 'right': "" },
@@ -192,6 +211,7 @@ endfunction
 
 " Gitgutter
 set updatetime=250
+let g:gutentags_enabled='0'
 
 """""""
 " fzf "
@@ -200,9 +220,22 @@ set updatetime=250
 set rtp+=/usr/local/opt/fzf
 
 " Key Bindings
-nmap ; :Buffers<CR>
-nmap <Leader>f :Files<CR>
+nmap <Leader><Leader> :Buffers<CR>
+nmap <Leader>f :GFiles<CR>
+nmap <Leader>j :Files<CR>
 
+""""""""""""""""""""""""""""""
+" Pear Tree auto-pair plugin "
+""""""""""""""""""""""""""""""
+" rules for matching:
+let g:pear_tree_pairs = {
+            \ '(': {'closer': ')'},
+            \ '[': {'closer': ']'},
+            \ '{': {'closer': '}'},
+            \ "'": {'closer': "'"},
+            \ '"': {'closer': '"'},
+            \ '/\*': {'closer': ' \*/'}
+            \ }
 
 """""""""
 " latex "
