@@ -5,3 +5,5 @@ RMAP
 GR718B
 SpW
 param
+toolchain
+endianness

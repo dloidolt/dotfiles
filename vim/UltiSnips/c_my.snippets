@@ -1,0 +1,15 @@
+snippet for "for loop (for)"
+for (${2:i} = 0; $2 < ${1:count}; ${3:$2++}) {
+	${VISUAL}$0
+}
+endsnippet
+
+# #include <...>
+snippet #inc
+#include <${1:stdio}.h>
+endsnippet
+
+# #include "..."
+snippet #incc
+#include "${1:`vim_snippets#Filename("$1.h")`}"
+endsnippet

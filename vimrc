@@ -1,17 +1,13 @@
-set nocompatible
-
-" use the zsh shell
-set shell=/bin/zsh
-
-" turn syntax highlighting on
-syntax on
-color smyck
+colorscheme smyck
 
 " Set encoding
 set encoding=utf-8
 
+set updatetime=1000
+
 " remap <leader> key to ,
 :let mapleader = ","
+
 
 " enable undo changes after file write
 if has('persistent_undo')      "check if your vim version supports it
@@ -28,7 +24,6 @@ set spell spelllang=en_gb
 " Quickly fix spelling errors choosing the first result
 nmap <Leader>z z=1<CR><CR>
 
-
 " turn hybrid line numbers on
 " see: https://jeffkreeftmeijer.com/vim-number/
 " see: https://github.com/jeffkreeftmeijer/vim-numbertoggle
@@ -43,18 +38,6 @@ augroup END
 " turn off word wrap
 set nowrap
 
-" Show trailing spaces and highlight hard tabs
-set list listchars=tab:»·,trail:·
-
-" Strip trailing whitespaces on each save
-fun! <SID>StripTrailingWhitespaces()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
-endfun
-autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
-
 " Search related settings
 " While typing a search command, show where the pattern, as it was typed so far, matches.
 set incsearch
@@ -65,45 +48,73 @@ set ignorecase
 " Overrides ignorecase if your pattern contains mixed case
 set smartcase
 
-" Map Ctrl+l to clear highlighted searches
-nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
-" Highlight characters behind the 80 chars margin
-au FileType c au BufWinEnter * let w:m2=matchadd('ColumnMargin', '\%>80v.\+', -1)
+" Show trailing spaces and highlight hard tabs
+set list listchars=tab:»·,trail:·,nbsp:␣
 
-" Disable code folding
-set nofoldenable
+" Strip trailing whitespaces on each save
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 
-" change the direction of new splits
-set splitbelow
+" a new file will in split view open on the right/bottom side of the current split.
 set splitright
+set splitbelow
 
-" By default, Vim assumes all .h files to be C++ files.  Since project also comes with doxygen documentation, I want to set subtype to doxygen to enable very nice doxygen highlighting.
-let g:c_syntax_for_h = 1
+" Mimic English keyboard: map 'ü' and '+' to '[' and ']' respectively in normal mode
+nmap ü [
+nmap + ]
 
-" VHDL uses 3 spaces
-au FileType vhdl set softtabstop=3 tabstop=3 shiftwidth=3
+" c-syntax highlighting options
+autocmd FileType diff setlocal ts=8
+autocmd FileType make setlocal ts=8 sw=8 sts=8 noet
+
+"for *.h files use C syntax instead of C++ and use objc syntax instead of objcpp
+:let c_syntax_for_h = 1
+" GNU gcc specific items
+:let c_gnu = 1
+" spaces before a <Tab> as error
+:let c_space_errors = 1
+:let c_no_trail_space_error = 1
+
+
 
 """""""""""""""""""""""""""
 " Dash Doku Configuration "
 """""""""""""""""""""""""""
-:nmap <silent> <leader>d <Plug>DashSearch
+nmap <silent> <leader>d <Plug>DashSearch
 
-""""""""""""
-" Nerdtree "
-""""""""""""
-nmap <silent> <Leader>n :NERDTreeToggle<CR>
 
-"" Close window if last remaining window is NerdTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"""""""""""
+" signify "
+"""""""""""
+let g:signify_sign_change = '~'
+nnoremap <leader>gu :SignifyHunkUndo<cr>
+
+
+"""""""
+" fzf "
+"""""""
+"Respecting .gitignore
+"If you want the command to follow symbolic links and don't want it to exclude
+"hidden files, use the following command:
+let $FZF_DEFAULT_COMMAND = 'fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
+
+" Key Bindings
+nmap <Leader><Leader> :Buffers<CR>
+nmap <Leader>f :GFiles --cached --others --exclude-standard<cr>
+nmap <Leader>j :Files<CR>
+
 
 """""""""""""""""""""
 " ALE Configuration "
 """""""""""""""""""""
 nmap <silent> <leader>g :ALEGoToDefinition<CR>
 nmap <silent> <leader>s :ALEGoToDefinition -vsplit<CR>
-nmap <silent> <leader>t :ALEGoToDefinition -tab<CR>
-" nmap <silent> <leader>ss :ALEGoToDefinition -split<CR>
 nmap <silent> <leader>r :ALERename<CR>
 nmap <silent> <leader>h :ALEHover<CR>
 "" navigate between errors quickly
@@ -111,58 +122,14 @@ nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " disable virtualtext
-let g:ale_virtualtext_cursor = 0
-
+let g:ale_virtualtext_cursor = 'disabled'
 " change the format for echo messages
 let g:ale_echo_msg_format = '%s [%linter%]'
+" Enable completion where available.
+" You should not turn this setting on if you wish to use ALE as a completion
+" source for other completion plugins, like Deoplete.
+let g:ale_completion_enabled = 1
 
-"" Always show ALE Gutter
-"let g:ale_sign_column_always = 1
-
-"" No bgcolor for ALE SignColumn
-"highlight clear SignColumn
-"
-"
-"" use the brew python version
-" let b:ale_python_pyright_config = {
-" \ 'python': {
-" \   'pythonPath': '/usr/local/bin/python3',
-" \ },
-" \}
-"
-"" ale c configuration
-"" use the Weverything to enable all clang errors
-"let g:ale_c_cc_options = '-Weverything'
-"
-"" use rust analyser
-"let g:ale_linters = {'rust': ['cargo', 'rls', 'analyzer']} ", 'rustc']}
-
-""""""""""""
-" deoplete "
-""""""""""""
-" let g:deoplete#enable_at_startup = 1
-
-" close the preview window after completion is done.
-autocmd CompleteDone * silent! pclose!
-
-"""""""""""""
-" UltiSnips "
-"""""""""""""
-" Trigger configuration. Do not use <tab> if you use
-" https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-
-" shortcut to go to next position
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-
-" shortcut to go to previous position
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-
-" use numpy  docstring format for python
-let g:ultisnips_python_style="numpy"
 
 """""""""""""""""""""""""""""
 " lightline / lightline-ale "
@@ -209,50 +176,21 @@ function! LightlineGitbranch()
 endfunction
 
 
-" Gitgutter
-set updatetime=250
-let g:gutentags_enabled='0'
+"""""""""""""
+" UltiSnips "
+"""""""""""""
+" If you prefer to use the same trigger for expanding snippets and jumping forward,
+let g:UltiSnipsExpandOrJumpTrigger = "<tab>"
+" shortcut to go to previous position
+let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 
-"""""""
-" fzf "
-"""""""
-" Set fzf runtime "
-set rtp+=/usr/local/opt/fzf
 
-" Key Bindings
-nmap <Leader><Leader> :Buffers<CR>
-nmap <Leader>f :GFiles<CR>
-nmap <Leader>j :Files<CR>
+"""""""""""
+" Mesonic "
+"""""""""""
+nmap <silent> <leader>t :MesonTest --print-errorlogs<CR>
 
-""""""""""""""""""""""""""""""
-" Pear Tree auto-pair plugin "
-""""""""""""""""""""""""""""""
-" rules for matching:
-let g:pear_tree_pairs = {
-            \ '(': {'closer': ')'},
-            \ '[': {'closer': ']'},
-            \ '{': {'closer': '}'},
-            \ "'": {'closer': "'"},
-            \ '"': {'closer': '"'},
-            \ '/\*': {'closer': ' \*/'}
-            \ }
 
-"""""""""
-" latex "
-"""""""""
-" enable soft wrapping at the edge of the screen
-au FileType tex set wrap linebreak
-
-let g:vimtex_view_method = 'skim'
-nmap <silent> <leader>v :VimtexView
-
-" tex-conceal
-"set conceallevel=2
-"let g:tex_conceal="abdgms"
-
-" Load all plugins now.
-" Plugins need to be added to runtimepath before helptags can be generated.
-packloadall
 " Load all of the helptags now, after plugins have been loaded.
 " All messages and errors will be ignored.
 silent! helptags ALL

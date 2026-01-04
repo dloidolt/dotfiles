@@ -25,14 +25,16 @@ hi Search               cterm=none ctermbg=6        ctermfg=15      gui=none    
 hi IncSearch            cterm=none ctermbg=3        ctermfg=8       gui=none        guibg=#F6DC69   guifg=#8F8F8F
 hi ColumnMargin         cterm=none ctermbg=0                        gui=none        guibg=#000000
 hi Error                cterm=none ctermbg=1        ctermfg=15      gui=none        guibg=#C75646   guifg=#F7F7F7
-hi ErrorMsg             cterm=none ctermbg=1        ctermfg=15      gui=none                        guifg=#F7F7F7
+hi ErrorMsg             cterm=none ctermbg=none     ctermfg=9       gui=none        guibg=#282828   guifg=#E09690
 hi Folded               cterm=none ctermbg=8        ctermfg=2       gui=none        guibg=#8F8F8F   guifg=#C4E858
 hi FoldColumn           cterm=none ctermbg=8        ctermfg=2       gui=none        guibg=#8F8F8F   guifg=#C4E858
 hi NonText              cterm=bold ctermbg=none     ctermfg=8       gui=bold                        guifg=#8F8F8F
 hi ModeMsg              cterm=bold ctermbg=none     ctermfg=10      gui=none
 hi Pmenu                cterm=none ctermbg=8        ctermfg=15      gui=none        guibg=#8F8F8F   guifg=#F7F7F7
 hi PmenuSel             cterm=none ctermbg=15       ctermfg=8       gui=none        guibg=#F7F7F7   guifg=#8F8F8F
-hi PmenuSbar            cterm=none ctermbg=15       ctermfg=8       gui=none        guibg=#F7F7F7   guifg=#8F8F8F
+hi PmenuSbar            cterm=none ctermbg=15       ctermfg=8       gui=none        guibg=#363636   guifg=#F7F7F7
+hi PmenuThumb           cterm=none ctermbg=15       ctermfg=8       gui=none        guibg=#787878   guifg=#F7F7F7
+hi WildMenu             cterm=none ctermbg=15       ctermfg=8       gui=none        guibg=#F7F7F7   guifg=#5D5D5D
 hi SpellBad        cterm=underline ctermbg=none     ctermfg=none    gui=underline                                   guisp=#C75646
 hi SpellCap        cterm=underline ctermbg=none     ctermfg=none    gui=underline                                   guisp=#F6DC69
 hi SpellRare       cterm=underline ctermbg=none     ctermfg=none    gui=underline                                   guisp=#88CCE7
@@ -46,9 +48,9 @@ hi DiffDelete           cterm=bold ctermbg=1        ctermfg=15      gui=none    
 " hi DiffText             cterm=none ctermbg=none     ctermfg=15      gui=none        guibg=#282828   guifg=#F7F7F7
 hi DiffText             cterm=none ctermbg=none     ctermfg=15      gui=none        guibg=#282828   guifg=#F7F7F7
 hi MatchParen           cterm=none ctermbg=6        ctermfg=15      gui=none        guibg=#2EB5C1   guifg=#F7F7F7
-hi CursorLine           cterm=none ctermbg=238      ctermfg=none    gui=none        guibg=#242424
+hi CursorLine           cterm=none ctermbg=238      ctermfg=none    gui=none        guibg=#282828
 hi CursorLineNr         cterm=none ctermbg=238      ctermfg=none    gui=none                        guifg=#FFE377
-hi CursorColumn         cterm=none ctermbg=238      ctermfg=none    gui=none        guibg=#424242
+hi CursorColumn         cterm=none ctermbg=238      ctermfg=none    gui=none        guibg=#282828
 hi Title                cterm=none ctermbg=none     ctermfg=4       gui=none                        guifg=#88CCE7
 "add for vspilt
 hi VertSplit            cterm=bold ctermbg=none     ctermfg=8       gui=bold        guibg=#282828   guifg=#8F8F8F
