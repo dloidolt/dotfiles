@@ -1,0 +1,71 @@
+[core]
+	excludesfile = ~/.gitignore
+
+[alias]
+	tree = log --oneline --decorate --all --graph
+
+[init]
+	defaultBranch = main
+
+[help]
+	autoCorrect = prompt
+
+[commit]
+	; show unified diff of all file changes at the bottom of the commit message template
+	verbose = true
+
+[branch]
+	sort = -committerdate
+
+[tag]
+	sort = version:refname
+
+[fetch]
+	all = true
+
+[pull]
+	rebase = true
+
+[push]
+	; push the current branch and set the remote as upstream
+	autoSetupRemote = true
+	followTags = true
+
+[diff]
+	; generate a diff using the "histogram diff" algorithm
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+	guitool = meld
+
+[difftool "meld"]
+	cmd = meld "$LOCAL" "$REMOTE"
+
+[merge]
+	; adds a ||||||| marker and the original text before the ======= marker
+	conflictStyle = zdiff3
+	tool = meld
+
+[mergetool "meld"]
+	;cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+	cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+
+[pager]
+	log =  diff-highlight | less --tabs=8 -RFX
+	show = diff-highlight | less --tabs=8 -RFX
+	diff = diff-highlight | less --tabs=1,9 -RFX
+
+; [column]
+; 	ui = auto
+
+[rerere]
+	enabled = true
+
+[interactive]
+	diffFilter = diff-highlight
