@@ -13,8 +13,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
-# powerlevel10k theme configuration
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -29,14 +27,13 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# zstyle ':omz:update' frequency 13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
@@ -48,9 +45,12 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+# ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -67,39 +67,23 @@ ENABLE_CORRECTION="true"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
+# ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
-
+# Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vi-mode zsh-z alias-finder pip)
+plugins=(git z vi-mode brew jj)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# add /diff-highlight to PATH
-export PATH="$PATH:/usr/local/opt/git/share/git-core/contrib/diff-highlight"
-
-# bat can be used as a colorizing pager for man, by setting the MANPAGER environment variable
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+# export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
-alias weather='curl https://v2.wttr.in'
-alias weather_wien='curl https://v2.wttr.in/Wien'
-
-export LSCOLORS="Gxfxcxdxbxegedabagacad"
-LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:"
-
-# removes extra space at the end of line #see https://github.com/romkatv/powerlevel10k/issues/132#issuecomment-514592283
-ZLE_RPROMPT_INDENT=0
-
-[ -f ${HOME}/.iterm2_shell_integration.zsh ] && source ${HOME}/.iterm2_shell_integration.zsh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -110,20 +94,78 @@ else
   export GIT_EDITOR='mvim -f'
 fi
 
-alias v=$EDITOR
+# Compilation flags
+# export ARCHFLAGS="-arch $(uname -m)"
 
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+# cd in the git root directory if called for a git subdirectory
+alias v=$EDITOR' -c "cd "$(git rev-parse --show-toplevel 2> /dev/null || pwd)""'
+alias m='meson'
+alias t='unbuffer meson test --print-errorlogs | sed "s/FAIL:/\\x1b[1;31mFAIL\x1b[0m:/g"'
+
+# CTRL-Y to copy the command into clipboard using pbcopy
+export FZF_CTRL_R_OPTS="
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --color header:italic
+  --header 'Press CTRL-Y to copy command into clipboard'"
+
+# LESS configuration:
+# --quit-if-one-screen: automatically exit if the content fits on one screen
+# --ignore-case: ignore case in searches that do not contain uppercase
+# --jump-target=.3: scroll to 30% of the screen height when jumping to a target
+# --tabs=8: set tab stops every 8 spaces
+# -R: display raw control characters for ANSI colour
+# --quit-on-intr: exit less on CTRL-C
+# --long-prompt: provide a more detailed prompt
+export LESS='--quit-if-one-screen --ignore-case --jump-target=.3 --tabs=8 -R --quit-on-intr --long-prompt'
+
+# bat can be used as a colorizing pager for man, by setting the MANPAGER environment variable
+if type "$bar" > /dev/null; then
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+fi
+
+# Map 'K' in vi-mode to run-help (like in Vim)
+bindkey -M vicmd 'K' run-help
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# This plugin searches the defined aliases and outputs any that match the
-# command inputted. This makes learning new aliases easier.
-ZSH_ALIAS_FINDER_AUTOMATIC=true
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-[ -f ${HOME}/.fzf.zsh ] && source ${HOME}/.fzf.zsh
+source ~/.iterm2_shell_integration.zsh
 
-[ -f "$(command -v thefuck)" ] && eval $(thefuck --alias)
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
 
+#For pipx
+export PATH="$PATH:$HOME/.local/bin"
+#For homebrew
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export PATH="/opt/homebrew/opt/python3/libexec/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+# for clang-tidy
+export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
+alias docker=podman
+
+export PYTHONSTARTUP=$HOME/.config/ptpython/startup.py
+export PTPYTHON_CONFIG_HOME=$HOME/.config/ptpython
+export PATH="/opt/homebrew/opt/rustup/bin:$PATH"
