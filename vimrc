@@ -1,4 +1,5 @@
 colorscheme smyck
+syntax on
 
 " Set encoding
 set encoding=utf-8

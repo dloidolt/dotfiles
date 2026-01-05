@@ -85,13 +85,17 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-  export GIT_EDITOR=$EDITOR
-else
+# Use mvim (MacVim) on macOS if available, otherwise use vim
+if command -v mvim --version > /dev/null 2>&1 && [[ -z $SSH_CONNECTION ]]; then
   export EDITOR='mvim'
   export GIT_EDITOR='mvim -f'
+else
+  export EDITOR='vim'
+  export GIT_EDITOR=$EDITOR
+fi
+
+if [[ -z "$TERM" || "$TERM" = "xterm" ]]; then
+  export TERM=xterm-256color
 fi
 
 # Compilation flags
@@ -150,21 +154,26 @@ bindkey -M vicmd 'K' run-help
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-source ~/.iterm2_shell_integration.zsh
+if [[ -r ~/.iterm2_shell_integration.zsh ]]; then
+  source ~/.iterm2_shell_integration.zsh
+fi
 
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
 #For pipx
 export PATH="$PATH:$HOME/.local/bin"
-#For homebrew
-export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
-export PATH="/opt/homebrew/opt/python3/libexec/bin:$PATH"
-export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-# for clang-tidy
-export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
-alias docker=podman
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  #For homebrew
+  export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+  export PATH="/opt/homebrew/opt/python3/libexec/bin:$PATH"
+  export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+  export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+  # for clang-tidy
+  export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
+  alias docker=podman
+fi
 
 export PYTHONSTARTUP=$HOME/.config/ptpython/startup.py
 export PTPYTHON_CONFIG_HOME=$HOME/.config/ptpython

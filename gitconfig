@@ -57,9 +57,10 @@
 	updateRefs = true
 
 [pager]
-	log =  diff-highlight | less --tabs=8 -RFX
-	show = diff-highlight | less --tabs=8 -RFX
-	diff = diff-highlight | less --tabs=1,9 -RFX
+	; Use diff-highlight if available, otherwise pass through to less
+	log =  sh -c "command -v diff-highlight >/dev/null 2>&1 && diff-highlight || cat" | less --tabs=8 -RFX
+	show = sh -c "command -v diff-highlight >/dev/null 2>&1 && diff-highlight || cat" | less --tabs=8 -RFX
+	diff = sh -c "command -v diff-highlight >/dev/null 2>&1 && diff-highlight || cat" | less --tabs=1,9 -RFX
 
 ; [column]
 ; 	ui = auto
@@ -68,4 +69,4 @@
 	enabled = true
 
 [interactive]
-	diffFilter = diff-highlight
+	diffFilter = sh -c 'command -v diff-highlight >/dev/null 2>&1 && diff-highlight || cat'
