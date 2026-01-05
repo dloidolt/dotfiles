@@ -20,5 +20,8 @@
       create: true
       path: vim/colors/smyck_lightline.vim
 
+- create:
+    - ~/.vim/undo
+
 - shell:
     - [git submodule update --init --recursive --remote, Installing submodules]
