@@ -131,7 +131,7 @@ export FZF_CTRL_R_OPTS="
 export LESS='--quit-if-one-screen --ignore-case --jump-target=.3 --tabs=8 -R --quit-on-intr --long-prompt'
 
 # bat can be used as a colorizing pager for man, by setting the MANPAGER environment variable
-if type "$bar" > /dev/null; then
+if type "bat" > /dev/null; then
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 fi
 
