@@ -13,6 +13,7 @@
     ~/.oh-my-zsh:
     ~/.oh-my-zsh-custom:
     ~/.p10k.zsh:
+    ~/.tmux.conf:
     ~/.vim:
     ~/.vimrc:
     ~/.zshenv:
