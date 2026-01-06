@@ -100,6 +100,9 @@ nnoremap <leader>gu :SignifyHunkUndo<cr>
 """""""
 " fzf "
 """""""
+" If installed using Homebrew on Apple Silicon
+set rtp+=/opt/homebrew/opt/fzf
+
 "Respecting .gitignore
 "If you want the command to follow symbolic links and don't want it to exclude
 "hidden files, use the following command:
@@ -184,6 +187,11 @@ endfunction
 let g:UltiSnipsExpandOrJumpTrigger = "<tab>"
 " shortcut to go to previous position
 let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
+" When UltiSnips is loaded, it will check that the running Vim was compiled with
+" python support.  If no support is detected, a warning will be displayed and
+" loading of UltiSnips will be skipped.
+" This suppress this warning message.
+let g:UltiSnipsNoPythonWarning = 1
 
 
 """""""""""
