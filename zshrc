@@ -86,12 +86,13 @@ source $ZSH/oh-my-zsh.sh
 export LANG=en_US.UTF-8
 
 # Use mvim (MacVim) on macOS if available, otherwise use vim
-if command -v mvim --version > /dev/null 2>&1 && [[ -z $SSH_CONNECTION ]]; then
+if command -v mvim > /dev/null 2>&1 && [[ -z $SSH_CONNECTION ]]; then
   export EDITOR='mvim'
-  export GIT_EDITOR='mvim -f'
+  # https://github.com/macvim-dev/macvim/wiki/FAQ#how-can-i-use-macvim-to-edit-git-commit-messages
+  export GIT_EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
+  export JJ_EDITOR='mvim -f --nomru'
 else
   export EDITOR='vim'
-  export GIT_EDITOR=$EDITOR
 fi
 
 if [[ -z "$TERM" || "$TERM" = "xterm" ]]; then
