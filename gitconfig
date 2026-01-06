@@ -70,3 +70,7 @@
 
 [interactive]
 	diffFilter = sh -c 'command -v diff-highlight >/dev/null 2>&1 && diff-highlight || cat'
+
+# Load the private file if it exists; for name email and so on.
+[include]
+    path = ~/.gitconfig.local
