@@ -118,6 +118,7 @@ fi
 alias v=$EDITOR' -c "cd "$(git rev-parse --show-toplevel 2> /dev/null || pwd)""'
 alias m='meson'
 alias t='unbuffer meson test --print-errorlogs | sed "s/FAIL:/\\x1b[1;31mFAIL\x1b[0m:/g"'
+alias jjdr='jj diff -r'
 
 # CTRL-Y to copy the command into clipboard using pbcopy
 export FZF_CTRL_R_OPTS="
